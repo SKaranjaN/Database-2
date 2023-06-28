@@ -42,6 +42,17 @@ def students():
 
         return response
 
+@app.route("/students/<int:id>", methods = ["GET", "PATCH", "DELETE"])
+def students_By_Id(id):
+    students = Student.query.filter_by(id=id).first()
+    if request.method == "GET":
+        student_dict = students.to_dict()
+
+        response = make_response(jsonify(student_dict), 200)
+        
+        return response
+        
+
 
 if __name__ == '__main__':
     app.run(port=5555)
