@@ -49,10 +49,18 @@ def students_By_Id(id):
         student_dict = students.to_dict()
 
         response = make_response(jsonify(student_dict), 200)
-        
-        return response
-        
 
+        return response
+    elif request.method == "PATCH":
+        for attr in request.json:
+            setattr(students, attr, request.json.get(attr))
+
+            db.session.commit()
+
+            student_dict = students.to_dict()
+            response = make_response(jsonify(student_dict), 200)  
+
+            return response     
 
 if __name__ == '__main__':
     app.run(port=5555)
