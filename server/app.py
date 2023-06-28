@@ -60,7 +60,19 @@ def students_By_Id(id):
             student_dict = students.to_dict()
             response = make_response(jsonify(student_dict), 200)  
 
-            return response     
+            return response   
+
+    elif request.method == "DELETE":
+        if not students:
+            return jsonify({"error": "Not found"}), 404
+        
+        db.session.delete(students)
+        db.session.commit()
+
+        response = make_response(jsonify({"message": "Student expelled."}), 200)
+
+        return response
+
 
 if __name__ == '__main__':
     app.run(port=5555)
