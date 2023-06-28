@@ -18,5 +18,18 @@ db.init_app(app)
 def Index():
     return f'<h1>Welcome to Database School.</h1>'
 
+@app.route("/students", methods= ["GET"])
+def students():
+    if request.method == "GET":
+        students = Student.query.all()
+        all_students = [student.to_dict() for student in students]
+
+        response = make_response(jsonify(all_students), 200)
+
+        return response
+
+
+
+
 if __name__ == '__main__':
     app.run(port=5555)
